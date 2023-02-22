@@ -6,10 +6,10 @@ import androidx.lifecycle.ViewModel
 
 
 class DoseViewModel : ViewModel() {
-    private var statusPlayer = StatusPlayer.X
-    private var namePlayerX = "X"
-    private var namePlayerO = "O"
-    val player = MutableLiveData(namePlayerX)
+    private var statusPlayer = StatusPlayerDose.X
+    private var namePlayerOne = "X"
+    private var namePlayerTwo = "O"
+    val player = MutableLiveData(namePlayerOne)
     private val listChoose = arrayListOf("", "", "", "", "", "", "", "", "")
     val listLiveChoose = MutableLiveData<ArrayList<String>>()
     private val lisPlayerX = mutableSetOf<Int>()
@@ -24,14 +24,14 @@ class DoseViewModel : ViewModel() {
         listOf(0, 4, 8),
         listOf(2, 4, 6),
     )
+
     private fun changeStatus() {
-        statusPlayer = if (statusPlayer == StatusPlayer.X){
-            player.value = namePlayerO
-            StatusPlayer.O
-        }
-        else {
-            player.value = namePlayerX
-            StatusPlayer.X
+        statusPlayer = if (statusPlayer == StatusPlayerDose.X) {
+            player.value = namePlayerTwo
+            StatusPlayerDose.O
+        } else {
+            player.value = namePlayerOne
+            StatusPlayerDose.X
         }
     }
 
@@ -39,39 +39,37 @@ class DoseViewModel : ViewModel() {
         return (lisPlayerX.size + lisPlayerO.size) == 9
     }
 
-    private fun statusGameX(): StatusGame {
-    for (list in listWinner) {
-        var count = 0
-        for (int in list)
-            if (int in lisPlayerX) {
-                count++
-            }
-        if (count == 3) {
-            return StatusGame.XWIN
-        }
-    }
-    if (statusRow()) return StatusGame.ROW
-    return StatusGame.NONE
-}
-
-    private fun statusGameO(): StatusGame {
+    private fun statusGameX(): StatusGameDose {
         for (list in listWinner) {
             var count = 0
-            for (int in list)
-                if (int in lisPlayerO) {
-                    count++
-                }
+            for (int in list) if (int in lisPlayerX) {
+                count++
+            }
             if (count == 3) {
-                return StatusGame.OWIN
+                return StatusGameDose.XWIN
             }
         }
-        if (statusRow()) return StatusGame.ROW
-        return StatusGame.NONE
+        if (statusRow()) return StatusGameDose.ROW
+        return StatusGameDose.NONE
     }
 
-    fun choose(number: Int): StatusGame {
-        val status: StatusGame
-        if (statusPlayer == StatusPlayer.X) {
+    private fun statusGameO(): StatusGameDose {
+        for (list in listWinner) {
+            var count = 0
+            for (int in list) if (int in lisPlayerO) {
+                count++
+            }
+            if (count == 3) {
+                return StatusGameDose.OWIN
+            }
+        }
+        if (statusRow()) return StatusGameDose.ROW
+        return StatusGameDose.NONE
+    }
+
+    fun choose(number: Int): StatusGameDose {
+        val status: StatusGameDose
+        if (statusPlayer == StatusPlayerDose.X) {
             lisPlayerX.add(number)
             listChoose[number] = "X"
             status = statusGameX()
@@ -83,43 +81,26 @@ class DoseViewModel : ViewModel() {
         listLiveChoose.value = listChoose
         changeStatus()
         when (status) {
-            StatusGame.XWIN -> player.value = "$namePlayerX Win"
-            StatusGame.OWIN -> player.value = "$namePlayerO Win"
-            StatusGame.ROW -> player.value = "Row"
+            StatusGameDose.XWIN -> player.value = "$namePlayerOne Win"
+            StatusGameDose.OWIN -> player.value = "$namePlayerTwo Win"
+            StatusGameDose.ROW -> player.value = "Row"
             else -> {}
         }
         return status
     }
+
     fun reset() {
         lisPlayerX.clear()
         lisPlayerO.clear()
-        player.value = namePlayerX
-        statusPlayer = StatusPlayer.X
+        player.value = namePlayerOne
+        statusPlayer = StatusPlayerDose.X
         for (i in listChoose.indices) listChoose[i] = ""
         listLiveChoose.value = listChoose
     }
-    fun checkChoose(number: Int): Boolean{
-        return  number in lisPlayerX || number in lisPlayerO
+
+    fun checkChoose(number: Int): Boolean {
+        return number in lisPlayerX || number in lisPlayerO
 
 
     }
 }
-
-
-//
-
-//
-
-//
-
-//
-
-//
-
-//
-
-//
-
-//
-
-

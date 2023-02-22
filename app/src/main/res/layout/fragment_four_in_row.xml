@@ -1,14 +1,322 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".FourInRowFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <data>
+
+        <variable
+            name="fourRowViewModel"
+            type="com.example.game.FourInRowFragmentViewModel" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical"
+        tools:context=".FourInRowFragment">
 
-</FrameLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@{fourRowViewModel.player}"
+            android:textSize="40sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <LinearLayout
+                android:id="@+id/column1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:tag="0">
+
+                <Button
+                    android:id="@+id/btn1Column1"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_weight="1"
+                    android:tag="0"
+                    android:text="@{fourRowViewModel.listPlaceLiveData.get(0).get(4)}" />
+
+                <Button
+                    android:id="@+id/btn2Column1"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_weight="1"
+                    android:tag="0"
+                    android:text="@{fourRowViewModel.listPlaceLiveData.get(0).get(3)}" />
+
+                <Button
+                    android:id="@+id/btn3Column1"
+
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+
+                    android:layout_weight="1"
+                    android:tag="0"
+                    android:text="@{fourRowViewModel.listPlaceLiveData.get(0).get(2)}" />
+
+                <Button
+                    android:id="@+id/btn4Column1"
+
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+
+                    android:layout_weight="1"
+                    android:tag="0"
+                    android:text="@{fourRowViewModel.listPlaceLiveData.get(0).get(1)}" />
+
+                <Button
+                    android:id="@+id/btn5Column1"
+
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+
+                    android:layout_weight="1"
+                    android:tag="0"
+                    android:text="@{fourRowViewModel.listPlaceLiveData.get(0).get(0)}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/column2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:tag="1">
+
+                <Button
+                    android:id="@+id/btn1Column2"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+
+                    android:layout_weight="1"
+                    android:tag="1"
+                    android:text="@{fourRowViewModel.listPlaceLiveData.get(1).get(4)}" />
+
+                <Button
+                    android:id="@+id/btn2Column2"
+
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+
+                    android:layout_weight="1"
+                    android:tag="1"
+                    android:text="@{fourRowViewModel.listPlaceLiveData.get(1).get(3)}" />
+
+                <Button
+                    android:id="@+id/btn3Column2"
+
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+
+                    android:layout_weight="1"
+                    android:tag="1"
+                    android:text="@{fourRowViewModel.listPlaceLiveData.get(1).get(2)}" />
+
+                <Button
+                    android:id="@+id/btn4Column2"
+
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+
+                    android:layout_weight="1"
+                    android:tag="1"
+                    android:text="@{fourRowViewModel.listPlaceLiveData.get(1).get(1)}" />
+
+                <Button
+                    android:id="@+id/btn5Column2"
+
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+
+                    android:layout_weight="1"
+                    android:tag="1"
+                    android:text="@{fourRowViewModel.listPlaceLiveData.get(1).get(0)}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/column3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:tag="2">
+
+                <Button
+                    android:id="@+id/btn1Column3"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_weight="1"
+                    android:tag="2"
+                    android:text="@{fourRowViewModel.listPlaceLiveData.get(2).get(4)}" />
+
+                <Button
+                    android:id="@+id/btn2Column3"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+
+                    android:layout_weight="1"
+                    android:tag="2"
+                    android:text="@{fourRowViewModel.listPlaceLiveData.get(2).get(3)}" />
+
+                <Button
+                    android:id="@+id/btn3Column3"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+
+                    android:layout_weight="1"
+                    android:tag="2"
+                    android:text="@{fourRowViewModel.listPlaceLiveData.get(2).get(2)}" />
+
+                <Button
+                    android:id="@+id/btn4Column3"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+
+                    android:layout_weight="1"
+                    android:tag="2"
+                    android:text="@{fourRowViewModel.listPlaceLiveData.get(2).get(1)}" />
+
+                <Button
+                    android:id="@+id/btn5Column3"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_weight="1"
+
+                    android:tag="2"
+                    android:text="@{fourRowViewModel.listPlaceLiveData.get(2).get(0)}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/column4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:tag="3">
+
+                <Button
+                    android:id="@+id/btn1Column4"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+
+                    android:layout_weight="1"
+                    android:tag="3"
+                    android:text="@{fourRowViewModel.listPlaceLiveData.get(3).get(4)}" />
+
+                <Button
+                    android:id="@+id/btn2Column4"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+
+                    android:layout_weight="1"
+                    android:tag="3"
+                    android:text="@{fourRowViewModel.listPlaceLiveData.get(3).get(3)}" />
+
+                <Button
+                    android:id="@+id/btn3Column4"
+
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+
+                    android:layout_weight="1"
+                    android:tag="3"
+                    android:text="@{fourRowViewModel.listPlaceLiveData.get(3).get(2)}" />
+
+                <Button
+                    android:id="@+id/btn4Column4"
+
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+
+                    android:layout_weight="1"
+                    android:tag="3"
+                    android:text="@{fourRowViewModel.listPlaceLiveData.get(3).get(1)}" />
+
+                <Button
+                    android:id="@+id/btn5Column4"
+
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+
+                    android:layout_weight="1"
+                    android:tag="3"
+                    android:text="@{fourRowViewModel.listPlaceLiveData.get(3).get(0)}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/column5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:tag="4">
+
+                <Button
+                    android:id="@+id/btn1Column5"
+
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_weight="1"
+
+                    android:tag="4"
+                    android:text="@{fourRowViewModel.listPlaceLiveData.get(4).get(4)}" />
+
+                <Button
+                    android:id="@+id/btn2Column5"
+
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+
+                    android:layout_weight="1"
+                    android:tag="4"
+                    android:text="@{fourRowViewModel.listPlaceLiveData.get(4).get(3)}" />
+
+                <Button
+                    android:id="@+id/btn3Column5"
+
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+
+                    android:layout_weight="1"
+                    android:tag="4"
+                    android:text="@{fourRowViewModel.listPlaceLiveData.get(4).get(2)}" />
+
+                <Button
+                    android:id="@+id/btn4Column5"
+
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+
+                    android:layout_weight="1"
+                    android:tag="4"
+                    android:text="@{fourRowViewModel.listPlaceLiveData.get(4).get(1)}" />
+
+                <Button
+                    android:id="@+id/btn5Column5"
+
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+
+                    android:layout_weight="1"
+                    android:tag="4"
+                    android:text="@{fourRowViewModel.listPlaceLiveData.get(4).get(0)}" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+</layout>

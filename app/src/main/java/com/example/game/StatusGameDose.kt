@@ -1,5 +1,5 @@
 package com.example.game
 
-enum class StatusGame {
+enum class StatusGameDose {
     NONE, XWIN, OWIN,  ROW
 }
