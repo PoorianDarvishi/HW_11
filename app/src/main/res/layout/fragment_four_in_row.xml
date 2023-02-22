@@ -55,30 +55,24 @@
 
                 <Button
                     android:id="@+id/btn3Column1"
-
                     android:layout_width="75dp"
                     android:layout_height="75dp"
-
                     android:layout_weight="1"
                     android:tag="0"
                     android:text="@{fourRowViewModel.listPlaceLiveData.get(0).get(2)}" />
 
                 <Button
                     android:id="@+id/btn4Column1"
-
                     android:layout_width="75dp"
                     android:layout_height="75dp"
-
                     android:layout_weight="1"
                     android:tag="0"
                     android:text="@{fourRowViewModel.listPlaceLiveData.get(0).get(1)}" />
 
                 <Button
                     android:id="@+id/btn5Column1"
-
                     android:layout_width="75dp"
                     android:layout_height="75dp"
-
                     android:layout_weight="1"
                     android:tag="0"
                     android:text="@{fourRowViewModel.listPlaceLiveData.get(0).get(0)}" />
@@ -97,7 +91,6 @@
                     android:id="@+id/btn1Column2"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
-
                     android:layout_weight="1"
                     android:tag="1"
                     android:text="@{fourRowViewModel.listPlaceLiveData.get(1).get(4)}" />
@@ -210,7 +203,6 @@
                     android:id="@+id/btn1Column4"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
-
                     android:layout_weight="1"
                     android:tag="3"
                     android:text="@{fourRowViewModel.listPlaceLiveData.get(3).get(4)}" />
@@ -219,37 +211,30 @@
                     android:id="@+id/btn2Column4"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
-
                     android:layout_weight="1"
                     android:tag="3"
                     android:text="@{fourRowViewModel.listPlaceLiveData.get(3).get(3)}" />
 
                 <Button
                     android:id="@+id/btn3Column4"
-
                     android:layout_width="75dp"
                     android:layout_height="75dp"
-
                     android:layout_weight="1"
                     android:tag="3"
                     android:text="@{fourRowViewModel.listPlaceLiveData.get(3).get(2)}" />
 
                 <Button
                     android:id="@+id/btn4Column4"
-
                     android:layout_width="75dp"
                     android:layout_height="75dp"
-
                     android:layout_weight="1"
                     android:tag="3"
                     android:text="@{fourRowViewModel.listPlaceLiveData.get(3).get(1)}" />
 
                 <Button
                     android:id="@+id/btn5Column4"
-
                     android:layout_width="75dp"
                     android:layout_height="75dp"
-
                     android:layout_weight="1"
                     android:tag="3"
                     android:text="@{fourRowViewModel.listPlaceLiveData.get(3).get(0)}" />
@@ -266,50 +251,40 @@
 
                 <Button
                     android:id="@+id/btn1Column5"
-
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:layout_weight="1"
-
                     android:tag="4"
                     android:text="@{fourRowViewModel.listPlaceLiveData.get(4).get(4)}" />
 
                 <Button
                     android:id="@+id/btn2Column5"
-
                     android:layout_width="75dp"
                     android:layout_height="75dp"
-
                     android:layout_weight="1"
                     android:tag="4"
                     android:text="@{fourRowViewModel.listPlaceLiveData.get(4).get(3)}" />
 
                 <Button
                     android:id="@+id/btn3Column5"
-
                     android:layout_width="75dp"
                     android:layout_height="75dp"
-
                     android:layout_weight="1"
                     android:tag="4"
                     android:text="@{fourRowViewModel.listPlaceLiveData.get(4).get(2)}" />
 
                 <Button
                     android:id="@+id/btn4Column5"
-
                     android:layout_width="75dp"
                     android:layout_height="75dp"
-
                     android:layout_weight="1"
                     android:tag="4"
                     android:text="@{fourRowViewModel.listPlaceLiveData.get(4).get(1)}" />
 
                 <Button
                     android:id="@+id/btn5Column5"
-
                     android:layout_width="75dp"
                     android:layout_height="75dp"
-
                     android:layout_weight="1"
                     android:tag="4"
                     android:text="@{fourRowViewModel.listPlaceLiveData.get(4).get(0)}" />
