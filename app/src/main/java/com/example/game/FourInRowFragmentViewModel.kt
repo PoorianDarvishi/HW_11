@@ -56,6 +56,8 @@ class FourInRowFragmentViewModel : ViewModel() {
             resetListCustom()
             checkPlayerOneVertical()
             checkPlayerOneHorizontal()
+            checkPlayerOne()
+            checkPlayerOneReverse()
             namePlayerOne
         } else {
             changeStatus()
@@ -65,6 +67,8 @@ class FourInRowFragmentViewModel : ViewModel() {
             resetListCustom()
             checkPlayerTowVertical()
             checkPlayerTowHorizontal()
+            checkPlayerTwo()
+            checkPlayerTwoReverse()
             namePlayerTwo
         }
     }
@@ -137,6 +141,136 @@ class FourInRowFragmentViewModel : ViewModel() {
         }
     }
 
+    private fun checkPlayerOne() {
+        val size = 4
+        var sum = 0
+        var row = 0
+        var culonm = 0
+        var flag = true
+        for (i in 0..size * 2) {
+            var rowCustom = row
+            var columnCustom = culonm
+            while (rowCustom <= size) {
+                if (arrayListOf(columnCustom, rowCustom) in listChoosePlayerOne) {
+                    sum++
+                    if (sum == size) {
+                        player.value = "$namePlayerOne Win"
+                    }
+                } else {
+                    sum = 0
+                }
+                columnCustom++
+                rowCustom++
+            }
+            if (flag) {
+                row++
+            } else {
+                culonm++
+            }
+            if (row == size) {
+                flag = false
+                row = 0
+            }
+        }
+
+    }
+
+    private fun checkPlayerTwo() {
+        val size = 4
+        var sum = 0
+        var row = 0
+        var culonm = 0
+        var flag = true
+        for (i in 0..size * 2) {
+            var rowCustom = row
+            var columnCustom = culonm
+            while (rowCustom <= size) {
+                if (arrayListOf(columnCustom, rowCustom) in listChoosePlayerTwo) {
+                    sum++
+                    if (sum == size) {
+                        player.value = "$namePlayerTwo Win"
+                    }
+                } else {
+                    sum = 0
+                }
+                columnCustom++
+                rowCustom++
+            }
+            if (flag) {
+                row++
+            } else {
+                culonm++
+            }
+            if (row == size) {
+                flag = false
+                row = 0
+            }
+        }
+    }
+
+    private fun checkPlayerOneReverse() {
+        val size = 4
+        var sum = 0
+        var row = size
+        var culonm = size
+        var flag = true
+        for (i in 0..size * 2) {
+            var rowCustom = row
+            var columnCustom = culonm
+            while (rowCustom <= 4) {
+                if (arrayListOf(columnCustom, rowCustom) in listChoosePlayerOne) {
+                    sum++
+                    if (sum == size) {
+                        player.value = "$namePlayerOne Win"
+                    }
+                } else {
+                    sum = 0
+                }
+                columnCustom--
+                rowCustom++
+            }
+            if (flag) {
+                row--
+            } else {
+                culonm--
+            }
+            if (row == 0) {
+                flag = false
+            }
+        }
+    }
+
+    private fun checkPlayerTwoReverse() {
+        val size = 4
+        var sum = 0
+        var row = size
+        var culonm = size
+        var flag = true
+        for (i in 0..size * 2) {
+            var rowCustom = row
+            var columnCustom = culonm
+            while (rowCustom <= 4) {
+                if (arrayListOf(columnCustom, rowCustom) in listChoosePlayerTwo) {
+                    sum++
+                    if (sum == size) {
+                        player.value = "$namePlayerTwo Win"
+                    }
+                } else {
+                    sum = 0
+                }
+                columnCustom--
+                rowCustom++
+            }
+            if (flag) {
+                row--
+            } else {
+                culonm--
+            }
+            if (row == 0) {
+                flag = false
+            }
+        }
+    }
 
 
     private fun resetListCustom() {
