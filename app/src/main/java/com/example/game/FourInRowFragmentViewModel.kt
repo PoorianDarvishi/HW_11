@@ -4,22 +4,35 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class FourInRowFragmentViewModel : ViewModel() {
-    private val listPlace = arrayListOf(
-        arrayListOf("", "", "", "", ""),
-        arrayListOf("", "", "", "", ""),
-        arrayListOf("", "", "", "", ""),
-        arrayListOf("", "", "", "", ""),
-        arrayListOf("", "", "", "", ""),
-    )
-    private val listChoosePlayerOne = mutableSetOf<ArrayList<Int>>()
-    val listChoosePlayerTwo = mutableSetOf<ArrayList<Int>>()
-    var listCustom = arrayListOf(-1, -1)
-    val listPlaceLiveData = MutableLiveData(listPlace)
 
+    private var listPlace = ArrayList<String>()
+    private var rowAndColumn = 5
+    fun changeRowAndColumn(createRowAndColumn: Int) {
+        rowAndColumn = createRowAndColumn
+    }
+
+    private fun fetchData(createRowAndColumn: Int) {
+        for (i in 0 until createRowAndColumn * createRowAndColumn) {
+            listPlace.add("")
+        }
+    }
+
+    init {
+        fetchData(rowAndColumn)
+    }
+
+    private val listChoosePlayerOne = mutableSetOf<Int>()
+    private val listChoosePlayerTwo = mutableSetOf<Int>()
     private var statusPlayer = StatusPlayerFourRow.PLAYER1
     private var namePlayerOne = "pooria"
     private var namePlayerTwo = "mohsen"
     val player = MutableLiveData(namePlayerOne)
+    var status = arrayListOf(false)
+
+    fun getListPlace(): ArrayList<String> {
+        return listPlace
+    }
+
     private fun changeStatus() {
         statusPlayer = if (statusPlayer == StatusPlayerFourRow.PLAYER1) {
             player.value = namePlayerTwo
@@ -30,251 +43,131 @@ class FourInRowFragmentViewModel : ViewModel() {
         }
     }
 
-    fun chooseColumn(column: Int) {
-        listCustom[0] = column
-        listPlace[column] = chooseInColumn(listPlace[column])
-        listPlaceLiveData.value = listPlace
-    }
-
-    private fun chooseInColumn(list: ArrayList<String>): ArrayList<String> {
-        for (i in list.indices) {
-            if (list[i] == "") {
-                listCustom[1] = i
-                list[i] = choose()
-                return list
-            }
+    fun choosePlace(place: Int): ArrayList<String> {
+        var location = place % rowAndColumn + ((rowAndColumn - 1) * rowAndColumn)
+        for (index in 0 until rowAndColumn) {
+            if (listPlace[location] == "") {
+                listPlace[location] = choose(location)
+                break
+            } else location -= rowAndColumn
         }
-        return list
+        return listPlace
     }
 
-    private fun choose(): String {
+    private fun choose(place: Int): String {
         return if (statusPlayer == StatusPlayerFourRow.PLAYER1) {
             changeStatus()
-            if (listCustom[1] != -1) {
-                listChoosePlayerOne.add(listCustom)
+            listChoosePlayerOne.add(place)
+            if (check(listChoosePlayerOne)) {
+                status[0] = true
+                player.value = "$namePlayerOne Win"
             }
-            resetListCustom()
-            checkPlayerOneVertical()
-            checkPlayerOneHorizontal()
-            checkPlayerOne()
-            checkPlayerOneReverse()
             namePlayerOne
         } else {
             changeStatus()
-            if (listCustom[1] != -1) {
-                listChoosePlayerTwo.add(listCustom)
+            listChoosePlayerTwo.add(place)
+            if (check(listChoosePlayerTwo)) {
+                status[0] = true
+                player.value = "$namePlayerTwo Win"
             }
-            resetListCustom()
-            checkPlayerTowVertical()
-            checkPlayerTowHorizontal()
-            checkPlayerTwo()
-            checkPlayerTwoReverse()
             namePlayerTwo
         }
     }
 
-    private fun checkPlayerOneVertical() {
-        var sum = 0
-        for (i in 0 until listPlace.size) {
-            for (j in 0 until listPlace[0].size) {
-                if (arrayListOf(i, j) in listChoosePlayerOne) {
-                    sum++
-                    if (sum == 4) {
-                        player.value = "$namePlayerOne Win"
-                    }
-                } else {
-                    sum = 0
-                }
-            }
-            sum = 0
-        }
+    private fun check(listChoose: MutableSet<Int>): Boolean {
+        return if (winVertical(listChoose)) {
+            true
+        } else if (winHorizontal(listChoose)) {
+            true
+        }else if(winDiagonal(listChoose)){
+            true
+        } else winDiagonalRevers(listChoose)
     }
 
-    private fun checkPlayerOneHorizontal() {
-        var sum = 0
-        for (i in 0 until listPlace.size) {
-            for (j in 0 until listPlace[0].size) {
-                if (arrayListOf(j, i) in listChoosePlayerOne) {
-                    sum++
-                    if (sum == 4) {
-                        player.value = "$namePlayerOne Win"
-                    }
+    private fun winVertical(listChoose: MutableSet<Int>): Boolean {
+        for (i in 0 until rowAndColumn) {
+            var count = 0
+            for (j in i until rowAndColumn * rowAndColumn step 5) {
+                if (j in listChoose) {
+                    count++
+                    if (count == 4) return true
                 } else {
-                    sum = 0
+                    count = 0
                 }
             }
-            sum = 0
         }
-    }
-
-    private fun checkPlayerTowVertical() {
-        var sum = 0
-        for (i in 0 until listPlace.size) {
-            for (j in 0 until listPlace[0].size) {
-                if (arrayListOf(i, j) in listChoosePlayerTwo) {
-                    sum++
-                    if (sum == 4) {
-                        player.value = "$namePlayerTwo Win"
-                    }
-                } else {
-                    sum = 0
-                }
-            }
-            sum = 0
-        }
-    }
-
-    private fun checkPlayerTowHorizontal() {
-        var sum = 0
-        for (i in 0 until listPlace.size) {
-            for (j in 0 until listPlace[0].size) {
-                if (arrayListOf(j, i) in listChoosePlayerTwo) {
-                    sum++
-                    if (sum == 4) {
-                        player.value = "$namePlayerTwo Win"
-                    }
-                } else {
-                    sum = 0
-                }
-            }
-            sum = 0
-        }
-    }
-
-    private fun checkPlayerOne() {
-        val size = 4
-        var sum = 0
-        var row = 0
-        var culonm = 0
-        var flag = true
-        for (i in 0..size * 2) {
-            var rowCustom = row
-            var columnCustom = culonm
-            while (rowCustom <= size) {
-                if (arrayListOf(columnCustom, rowCustom) in listChoosePlayerOne) {
-                    sum++
-                    if (sum == size) {
-                        player.value = "$namePlayerOne Win"
-                    }
-                } else {
-                    sum = 0
-                }
-                columnCustom++
-                rowCustom++
-            }
-            if (flag) {
-                row++
-            } else {
-                culonm++
-            }
-            if (row == size) {
-                flag = false
-                row = 0
-            }
-        }
-
-    }
-
-    private fun checkPlayerTwo() {
-        val size = 4
-        var sum = 0
-        var row = 0
-        var culonm = 0
-        var flag = true
-        for (i in 0..size * 2) {
-            var rowCustom = row
-            var columnCustom = culonm
-            while (rowCustom <= size) {
-                if (arrayListOf(columnCustom, rowCustom) in listChoosePlayerTwo) {
-                    sum++
-                    if (sum == size) {
-                        player.value = "$namePlayerTwo Win"
-                    }
-                } else {
-                    sum = 0
-                }
-                columnCustom++
-                rowCustom++
-            }
-            if (flag) {
-                row++
-            } else {
-                culonm++
-            }
-            if (row == size) {
-                flag = false
-                row = 0
-            }
-        }
-    }
-
-    private fun checkPlayerOneReverse() {
-        val size = 4
-        var sum = 0
-        var row = size
-        var culonm = size
-        var flag = true
-        for (i in 0..size * 2) {
-            var rowCustom = row
-            var columnCustom = culonm
-            while (rowCustom <= 4) {
-                if (arrayListOf(columnCustom, rowCustom) in listChoosePlayerOne) {
-                    sum++
-                    if (sum == size) {
-                        player.value = "$namePlayerOne Win"
-                    }
-                } else {
-                    sum = 0
-                }
-                columnCustom--
-                rowCustom++
-            }
-            if (flag) {
-                row--
-            } else {
-                culonm--
-            }
-            if (row == 0) {
-                flag = false
-            }
-        }
-    }
-
-    private fun checkPlayerTwoReverse() {
-        val size = 4
-        var sum = 0
-        var row = size
-        var culonm = size
-        var flag = true
-        for (i in 0..size * 2) {
-            var rowCustom = row
-            var columnCustom = culonm
-            while (rowCustom <= 4) {
-                if (arrayListOf(columnCustom, rowCustom) in listChoosePlayerTwo) {
-                    sum++
-                    if (sum == size) {
-                        player.value = "$namePlayerTwo Win"
-                    }
-                } else {
-                    sum = 0
-                }
-                columnCustom--
-                rowCustom++
-            }
-            if (flag) {
-                row--
-            } else {
-                culonm--
-            }
-            if (row == 0) {
-                flag = false
-            }
-        }
+        return false
     }
 
 
-    private fun resetListCustom() {
-        listCustom = arrayListOf(-1, -1)
+    private fun winHorizontal(listChoose: MutableSet<Int>): Boolean {
+        for (i in 0 until rowAndColumn * rowAndColumn step 5) {
+            var count = 0
+            for (j in i..i + 4) {
+                if (j in listChoose) {
+                    count++
+                    if (count == 4) return true
+                } else {
+                    count = 0
+                }
+            }
+        }
+        return false
+    }
 
+    private fun winDiagonal(listChoose: MutableSet<Int>): Boolean {
+        for (i in 0 until rowAndColumn * rowAndColumn) {
+            var count = 0
+            var step = rowAndColumn
+            var num = 0
+            var number: Int
+            for (_i in 0 until rowAndColumn * 2 - 1) {
+                if (num >= rowAndColumn * (rowAndColumn - 1)) {
+                    step = 1
+                }
+                number = num
+                for (j in 0..num / (rowAndColumn - 1)) {
+                    if (number in listChoose) {
+                        count++
+                        if (count == 4) {
+                            return true
+                        }
+                    } else {
+                        count = 0
+                    }
+                    number -= rowAndColumn - 1
+                }
+                num += step
+            }
+        }
+        return false
+    }
+
+    private fun winDiagonalRevers(listChoose: MutableSet<Int>): Boolean {
+        for (i in 0 until rowAndColumn * rowAndColumn) {
+            var count = 0
+            var step = rowAndColumn
+            var num = rowAndColumn - 1
+            var number: Int
+            for (_i in 0 until rowAndColumn * 2 - 1) {
+                if (num >= rowAndColumn * (rowAndColumn - 1)) {
+                    step = -1
+                }
+                number = num
+                for (j in 0..num / (rowAndColumn - 1)) {
+                    if (number in listChoose) {
+                        count++
+                        if (count == 4) {
+                            return true
+                        }
+                    } else {
+                        count = 0
+                    }
+                    number -= rowAndColumn + 1
+                }
+                num += step
+            }
+        }
+        return false
     }
 }

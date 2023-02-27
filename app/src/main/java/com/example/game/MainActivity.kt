@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             dose.setOnClickListener {
                 supportFragmentManager.commit {
+                    supportFragmentManager.saveBackStack("Dose")
                     setReorderingAllowed(true)
                     replace<DoseFragment>(R.id.fragment_container_view)
                 }
